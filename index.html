@@ -14,7 +14,6 @@
   --c-border: rgba(0,255,80,0.08);
   --c-border2: rgba(0,255,80,0.18);
   --c-green: #00ff50;
-  --c-green2: #00cc40;
   --c-blue: #00aaff;
   --c-gold: #f5c842;
   --c-red: #ff4444;
@@ -26,13 +25,11 @@
   --font-mono: 'DM Mono', monospace;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min-height:100vh;font-size:14px;line-height:1.6;background-image:radial-gradient(ellipse 60% 40% at 20% 0%,rgba(0,255,80,0.04) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 80% 100%,rgba(0,170,255,0.04) 0%,transparent 60%)}
 
 .site-header{position:sticky;top:0;z-index:100;background:rgba(3,8,5,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--c-border2);padding:0 20px;display:flex;align-items:center;gap:16px;height:60px;box-shadow:0 1px 30px rgba(0,255,80,0.06)}
-.logo-wrap{flex-shrink:0;display:flex;align-items:center}
+.logo-wrap{flex-shrink:0}
 .logo-svg{height:42px;width:auto}
-
 .ticker-wrap{flex:1;overflow:hidden;mask-image:linear-gradient(to right,transparent,black 6%,black 94%,transparent)}
 .ticker{display:flex;gap:28px;animation:ticker-scroll 50s linear infinite;white-space:nowrap;font-family:var(--font-mono);font-size:11px}
 .ticker:hover{animation-play-state:paused}
@@ -42,7 +39,6 @@ body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min
 .tick-up{color:var(--c-green)}
 .tick-dn{color:var(--c-red)}
 @keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
 .header-time{font-family:var(--font-mono);font-size:10px;color:var(--c-muted);white-space:nowrap}
 .refresh-btn{background:transparent;border:1px solid var(--c-border2);color:var(--c-muted);padding:6px 14px;border-radius:6px;font-family:var(--font-body);font-size:12px;cursor:pointer;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
 .refresh-btn:hover{border-color:var(--c-green);color:var(--c-green);box-shadow:0 0 12px rgba(0,255,80,0.2)}
@@ -64,8 +60,7 @@ body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
 
 .commodity-grid{display:flex;flex-direction:column;gap:6px}
-.commodity-row{background:var(--c-surface2);border:1px solid var(--c-border);border-radius:7px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;transition:border-color 0.2s}
-.commodity-row:hover{border-color:var(--c-border2)}
+.commodity-row{background:var(--c-surface2);border:1px solid var(--c-border);border-radius:7px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between}
 .comm-name{font-size:11px;color:var(--c-muted)}
 .comm-price{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--c-green);text-shadow:0 0 8px rgba(0,255,80,0.3)}
 .comm-price.silver{color:#9ecfb0;text-shadow:none}
@@ -84,16 +79,14 @@ body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min
 .h-stat-chg{font-size:10px}
 
 .pol-list{display:flex;flex-direction:column;gap:7px}
-.pol-card{background:var(--c-surface2);border:1px solid var(--c-border);border-radius:7px;padding:10px 12px;transition:border-color 0.2s}
-.pol-card:hover{border-color:var(--c-border2)}
+.pol-card{background:var(--c-surface2);border:1px solid var(--c-border);border-radius:7px;padding:10px 12px}
 .pol-name{font-size:12px;font-weight:600;color:var(--c-text)}
 .pol-role{font-size:10px;color:var(--c-muted);margin-bottom:5px}
 .pol-latest{font-size:11px;color:var(--c-text);line-height:1.5}
 .pol-loading{font-size:11px;color:var(--c-muted);font-style:italic}
 
 .section-head{font-family:var(--font-brand);font-size:13px;letter-spacing:2px;color:var(--c-green);margin-bottom:14px;display:flex;align-items:center;gap:10px;text-shadow:0 0 16px rgba(0,255,80,0.5)}
-.section-head .badge{font-family:var(--font-body);font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;background:rgba(0,255,80,0.1);color:var(--c-green);border:1px solid var(--c-border2);letter-spacing:1px;animation:pulse-badge 3s infinite}
-@keyframes pulse-badge{0%,100%{box-shadow:0 0 6px rgba(0,255,80,0.2)}50%{box-shadow:0 0 14px rgba(0,255,80,0.5)}}
+.section-head .badge{font-family:var(--font-body);font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;background:rgba(0,255,80,0.1);color:var(--c-green);border:1px solid var(--c-border2);letter-spacing:1px}
 
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;margin-bottom:32px}
 .news-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:9px;padding:14px;display:flex;flex-direction:column;gap:7px;transition:border-color 0.2s,box-shadow 0.2s}
@@ -114,8 +107,16 @@ body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min
 .card-desc{font-size:11px;color:var(--c-muted);line-height:1.6}
 .card-source{font-size:10px;color:var(--c-dim);border-top:1px solid var(--c-border);padding-top:7px;margin-top:2px}
 
-.error-msg{background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:8px;padding:16px;color:#ff8080;font-size:13px;margin-bottom:24px}
-.error-msg strong{display:block;margin-bottom:4px;font-size:14px}
+/* Setup screen */
+.setup-screen{max-width:600px;margin:40px auto;padding:32px;background:var(--c-surface);border:1px solid var(--c-border2);border-radius:12px}
+.setup-screen h2{font-family:var(--font-brand);font-size:16px;color:var(--c-green);letter-spacing:2px;margin-bottom:16px;text-shadow:0 0 12px rgba(0,255,80,0.4)}
+.setup-screen p{font-size:13px;color:var(--c-muted);margin-bottom:20px;line-height:1.7}
+.key-input{width:100%;background:var(--c-surface2);border:1px solid var(--c-border2);border-radius:7px;padding:12px 14px;color:var(--c-text);font-family:var(--font-mono);font-size:13px;outline:none;margin-bottom:12px}
+.key-input:focus{border-color:var(--c-green);box-shadow:0 0 10px rgba(0,255,80,0.15)}
+.key-submit{background:var(--c-green);color:#030805;border:none;border-radius:7px;padding:11px 24px;font-family:var(--font-brand);font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;width:100%;transition:all 0.2s}
+.key-submit:hover{background:#00cc40;box-shadow:0 0 16px rgba(0,255,80,0.3)}
+.key-note{font-size:11px;color:var(--c-muted);margin-top:10px;line-height:1.6}
+.key-note a{color:var(--c-green);text-decoration:none}
 
 .skel-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:9px;padding:14px;display:flex;flex-direction:column;gap:10px}
 .skeleton{background:linear-gradient(90deg,var(--c-surface2) 25%,var(--c-dim) 50%,var(--c-surface2) 75%);background-size:200% 100%;animation:shimmer 1.8s infinite;border-radius:4px}
@@ -150,26 +151,22 @@ body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min
       <path d="M10,47 Q80,56 155,44" stroke="url(#ag)" stroke-width="1.5" fill="none" opacity="0.6" filter="url(#gb)"/>
     </svg>
   </div>
-
   <div class="ticker-wrap">
-    <div class="ticker" id="ticker">
+    <div class="ticker">
       <span class="tick-item"><span class="tick-sym">XAU/USD</span><span class="tick-price" id="t-gold">—</span><span id="t-gold-c" class="tick-up">—</span></span>
       <span class="tick-item"><span class="tick-sym">XAG/USD</span><span class="tick-price" id="t-silver">—</span><span id="t-silver-c">—</span></span>
       <span class="tick-item"><span class="tick-sym">AUD/USD</span><span class="tick-price" id="t-aud">—</span><span id="t-aud-c">—</span></span>
       <span class="tick-item"><span class="tick-sym">WTI Oil</span><span class="tick-price" id="t-oil">—</span><span id="t-oil-c">—</span></span>
       <span class="tick-item"><span class="tick-sym">Bitcoin</span><span class="tick-price" id="t-btc">—</span><span id="t-btc-c">—</span></span>
       <span class="tick-item"><span class="tick-sym">ASX 200</span><span class="tick-price" id="t-asx">—</span><span id="t-asx-c">—</span></span>
-      <span class="tick-item"><span class="tick-sym">Copper</span><span class="tick-price" id="t-cop">—</span><span id="t-cop-c">—</span></span>
       <span class="tick-item"><span class="tick-sym">XAU/USD</span><span class="tick-price">—</span><span class="tick-up">—</span></span>
       <span class="tick-item"><span class="tick-sym">XAG/USD</span><span class="tick-price">—</span><span>—</span></span>
       <span class="tick-item"><span class="tick-sym">AUD/USD</span><span class="tick-price">—</span><span>—</span></span>
       <span class="tick-item"><span class="tick-sym">WTI Oil</span><span class="tick-price">—</span><span>—</span></span>
       <span class="tick-item"><span class="tick-sym">Bitcoin</span><span class="tick-price">—</span><span>—</span></span>
       <span class="tick-item"><span class="tick-sym">ASX 200</span><span class="tick-price">—</span><span>—</span></span>
-      <span class="tick-item"><span class="tick-sym">Copper</span><span class="tick-price">—</span><span>—</span></span>
     </div>
   </div>
-
   <div class="header-time" id="clock"></div>
   <button class="refresh-btn" id="refresh-btn" onclick="refreshAll()">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
@@ -197,7 +194,7 @@ body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min
       <div class="commodity-grid">
         <div class="commodity-row"><div><div class="comm-name">Gold (oz)</div><div class="comm-price" id="s-gold">—</div></div><div class="comm-chg" id="s-gold-c">—</div></div>
         <div class="commodity-row"><div><div class="comm-name">Silver (oz)</div><div class="comm-price silver" id="s-silver">—</div></div><div class="comm-chg" id="s-silver-c">—</div></div>
-        <div class="commodity-row"><div><div class="comm-name">WTI Crude (bbl)</div><div class="comm-price oil" id="s-oil">—</div></div><div class="comm-chg" id="s-oil-c">—</div></div>
+        <div class="commodity-row"><div><div class="comm-name">WTI Crude</div><div class="comm-price oil" id="s-oil">—</div></div><div class="comm-chg" id="s-oil-c">—</div></div>
         <div class="commodity-row"><div><div class="comm-name">Copper (lb)</div><div class="comm-price copper" id="s-copper">—</div></div><div class="comm-chg" id="s-copper-c">—</div></div>
         <div class="commodity-row"><div><div class="comm-name">AUD/USD</div><div class="comm-price aud" id="s-aud">—</div></div><div class="comm-chg" id="s-aud-c">—</div></div>
         <div class="commodity-row"><div><div class="comm-name">Bitcoin</div><div class="comm-price btc" id="s-btc">—</div></div><div class="comm-chg" id="s-btc-c">—</div></div>
@@ -217,23 +214,25 @@ body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min
     <div>
       <div class="panel-title"><div class="dot" style="background:#ff8080;box-shadow:0 0 8px #ff4444"></div> POLITICAL WATCH</div>
       <div class="pol-list" id="pol-list">
-        <div class="pol-card"><div class="pol-name">Pauline Hanson</div><div class="pol-role">One Nation — QLD Senator</div><div class="pol-latest pol-loading">Fetching latest…</div></div>
-        <div class="pol-card"><div class="pol-name">Alex Antic</div><div class="pol-role">Liberal — SA Senator</div><div class="pol-latest pol-loading">Fetching latest…</div></div>
-        <div class="pol-card"><div class="pol-name">Malcolm Roberts</div><div class="pol-role">One Nation — QLD Senator</div><div class="pol-latest pol-loading">Fetching latest…</div></div>
+        <div class="pol-card"><div class="pol-name">Pauline Hanson</div><div class="pol-role">One Nation — QLD Senator</div><div class="pol-latest pol-loading">Enter API key to load…</div></div>
+        <div class="pol-card"><div class="pol-name">Alex Antic</div><div class="pol-role">Liberal — SA Senator</div><div class="pol-latest pol-loading">Enter API key to load…</div></div>
+        <div class="pol-card"><div class="pol-name">Malcolm Roberts</div><div class="pol-role">One Nation — QLD Senator</div><div class="pol-latest pol-loading">Enter API key to load…</div></div>
       </div>
     </div>
   </aside>
 
-  <main class="content-area">
-    <div id="loading-state">
+  <main class="content-area" id="main-content">
+
+
+    <div id="loading-state" style="display:none">
       <div class="section-head">ALL NEWS <span class="badge">LIVE</span></div>
       <div class="cards-grid">
-        <div class="skel-card"><div class="skeleton" style="height:10px;width:50%"></div><div class="skeleton" style="height:15px;width:90%"></div><div class="skeleton" style="height:11px;width:75%"></div><div class="skeleton" style="height:11px;width:60%"></div></div>
-        <div class="skel-card"><div class="skeleton" style="height:10px;width:45%"></div><div class="skeleton" style="height:15px;width:85%"></div><div class="skeleton" style="height:11px;width:80%"></div><div class="skeleton" style="height:11px;width:55%"></div></div>
-        <div class="skel-card"><div class="skeleton" style="height:10px;width:55%"></div><div class="skeleton" style="height:15px;width:92%"></div><div class="skeleton" style="height:11px;width:70%"></div><div class="skeleton" style="height:11px;width:65%"></div></div>
-        <div class="skel-card"><div class="skeleton" style="height:10px;width:40%"></div><div class="skeleton" style="height:15px;width:88%"></div><div class="skeleton" style="height:11px;width:78%"></div><div class="skeleton" style="height:11px;width:58%"></div></div>
-        <div class="skel-card"><div class="skeleton" style="height:10px;width:52%"></div><div class="skeleton" style="height:15px;width:82%"></div><div class="skeleton" style="height:11px;width:74%"></div><div class="skeleton" style="height:11px;width:62%"></div></div>
-        <div class="skel-card"><div class="skeleton" style="height:10px;width:48%"></div><div class="skeleton" style="height:15px;width:87%"></div><div class="skeleton" style="height:11px;width:72%"></div><div class="skeleton" style="height:11px;width:68%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:50%"></div><div class="skeleton" style="height:15px;width:90%"></div><div class="skeleton" style="height:11px;width:75%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:45%"></div><div class="skeleton" style="height:15px;width:85%"></div><div class="skeleton" style="height:11px;width:80%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:55%"></div><div class="skeleton" style="height:15px;width:92%"></div><div class="skeleton" style="height:11px;width:70%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:40%"></div><div class="skeleton" style="height:15px;width:88%"></div><div class="skeleton" style="height:11px;width:78%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:52%"></div><div class="skeleton" style="height:15px;width:82%"></div><div class="skeleton" style="height:11px;width:74%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:48%"></div><div class="skeleton" style="height:15px;width:87%"></div><div class="skeleton" style="height:11px;width:72%"></div></div>
       </div>
     </div>
     <div id="news-content" style="display:none"></div>
@@ -249,6 +248,8 @@ body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min
 function updateClock(){document.getElementById('clock').textContent=new Date().toLocaleString('en-AU',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Australia/Brisbane'})+' AEST'}
 updateClock();setInterval(updateClock,30000);
 
+
+
 // ── SECTION NAV ──
 let currentSection='all';
 function showSection(name,btn){
@@ -258,23 +259,23 @@ function showSection(name,btn){
   if(window._newsData)renderNews(window._newsData);
 }
 
-// ── SECURE API CALL via Netlify Function ──
-async function callAI(prompt){
+// ── API CALL via Netlify function ──
+async function callAI(prompt,maxTokens=1300){
   const r=await fetch('/.netlify/functions/news',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({messages:[{role:'user',content:prompt}]})
   });
-  if(!r.ok)throw new Error(`Function error: ${r.status}`);
+  if(!r.ok) throw new Error('Function error: '+r.status);
   return r.json();
 }
 
-// ── COMMODITIES via Yahoo Finance ──
+// ── COMMODITIES ──
 const COMMODITIES=[
   {sym:'XAUUSD=X',sIds:['s-gold'],tIds:['t-gold'],cIds:['s-gold-c','t-gold-c'],fmt:v=>'$'+v.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2})},
   {sym:'XAGUSD=X',sIds:['s-silver'],tIds:['t-silver'],cIds:['s-silver-c','t-silver-c'],fmt:v=>'$'+v.toFixed(2)},
   {sym:'CL=F',sIds:['s-oil'],tIds:['t-oil'],cIds:['s-oil-c','t-oil-c'],fmt:v=>'$'+v.toFixed(2)},
-  {sym:'HG=F',sIds:['s-copper'],tIds:['t-cop'],cIds:['s-copper-c','t-cop-c'],fmt:v=>'$'+v.toFixed(3)},
+  {sym:'HG=F',sIds:['s-copper'],tIds:[],cIds:['s-copper-c'],fmt:v=>'$'+v.toFixed(3)},
   {sym:'AUDUSD=X',sIds:['s-aud'],tIds:['t-aud'],cIds:['s-aud-c','t-aud-c'],fmt:v=>v.toFixed(4)},
   {sym:'BTC-USD',sIds:['s-btc'],tIds:['t-btc'],cIds:['s-btc-c','t-btc-c'],fmt:v=>'$'+Math.round(v).toLocaleString()},
   {sym:'^AXJO',sIds:['s-asx'],tIds:['t-asx'],cIds:['s-asx-c','t-asx-c'],fmt:v=>v.toLocaleString('en-AU',{minimumFractionDigits:1,maximumFractionDigits:1})},
@@ -305,9 +306,9 @@ async function loadCommodities(){
 
 // ── POLITICIANS ──
 const POLS=[
-  {name:'Pauline Hanson',role:'One Nation — QLD Senator',q:'What has Pauline Hanson said or done recently in Australian politics? Give her most recent statement, vote, or media appearance in 2-3 sentences. Factual and neutral.'},
-  {name:'Alex Antic',role:'Liberal — SA Senator',q:'What has Alex Antic said or done recently in Australian politics? Give his most recent statement, vote, or media appearance in 2-3 sentences. Factual and neutral.'},
-  {name:'Malcolm Roberts',role:'One Nation — QLD Senator',q:'What has Malcolm Roberts said or done recently in Australian politics? Give his most recent statement, vote, or media appearance in 2-3 sentences. Factual and neutral.'},
+  {name:'Pauline Hanson',role:'One Nation — QLD Senator',q:'What has Pauline Hanson said or done most recently in Australian politics? 2-3 sentences, factual and neutral.'},
+  {name:'Alex Antic',role:'Liberal — SA Senator',q:'What has Alex Antic said or done most recently in Australian politics? 2-3 sentences, factual and neutral.'},
+  {name:'Malcolm Roberts',role:'One Nation — QLD Senator',q:'What has Malcolm Roberts said or done most recently in Australian politics? 2-3 sentences, factual and neutral.'},
 ];
 async function loadPoliticians(){
   const list=document.getElementById('pol-list');
@@ -318,27 +319,25 @@ async function loadPoliticians(){
     card.innerHTML=`<div class="pol-name">${pol.name}</div><div class="pol-role">${pol.role}</div><div class="pol-latest pol-loading">Fetching…</div>`;
     list.appendChild(card);
     try{
-      const data=await callAI(pol.q);
+      const data=await callAI(pol.q,250);
       const text=data.content?.filter(b=>b.type==='text').map(b=>b.text).join(' ').trim()||'No recent activity found.';
       card.querySelector('.pol-latest').textContent=text;
       card.querySelector('.pol-latest').classList.remove('pol-loading');
-    }catch(e){
-      card.querySelector('.pol-latest').textContent='Could not load.';
-    }
+    }catch(e){card.querySelector('.pol-latest').textContent='Could not load.';}
   }
 }
 
 // ── NEWS ──
 const CATEGORIES=[
-  {key:'aviation',label:'Aviation',icon:'✈️',pill:'pill-aviation',prompt:'Generate 4 current Australian aviation news stories. Cover: CASA regulatory updates, airline industry moves, Embraer E-jet operations in Australia, aircraft safety, new routes, ATC updates. Each story must be distinct. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
-  {key:'jobs',label:'Pilot Jobs',icon:'👨‍✈️',pill:'pill-jobs',prompt:'Generate 4 current aviation job market news items for Australia. Cover: jet captain/FO vacancies, flight instructor roles, type rating instructor positions, chief pilot or fleet manager roles, airline cadet programs, simulator instructor jobs. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
-  {key:'finance',label:'Finance & Tax',icon:'💰',pill:'pill-finance',prompt:'Generate 4 current Australian finance and tax news items for high-income professionals and small business owners in QLD. Cover: ATO updates, EOFY tax strategies, CGT, negative gearing, tax offsets, deductions, accountancy news. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
-  {key:'property',label:'SEQ Property',icon:'🏠',pill:'pill-property',prompt:'Generate 4 current South East Queensland property news items covering Brisbane, Gold Coast, Sunshine Coast, Moreton Bay, Logan, Ipswich. Include price movements, rental yields, 2032 Olympics impact, developer news, QLD grants. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
-  {key:'smsf',label:'SMSF',icon:'🏦',pill:'pill-smsf',prompt:'Generate 4 current Australian SMSF news items. Cover: ATO compliance, contribution caps, property in SMSF, pension phase, audit requirements, SMSF investment strategies for small business owners. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
-  {key:'smallbiz',label:'Small Business',icon:'🛠️',pill:'pill-smallbiz',prompt:'Generate 4 current Australian small business news items. Cover: government incentives, instant asset write-off, ATO payment plans, QLD state grants, digital transformation support, energy relief, IR/employment law changes. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
-  {key:'homeschool',label:'Home School',icon:'📚',pill:'pill-homeschool',prompt:'Generate 4 current home schooling news items for Australian families. Cover: QLD registration, curriculum resources, online learning, legal frameworks, university pathways, Charlotte Mason or classical education, homeschool community events. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
-  {key:'nutrition',label:'Food & Nutrition',icon:'🥗',pill:'pill-nutrition',prompt:'Generate 4 current food and nutrition science news items. Cover: intermittent fasting, protein and longevity, cardiovascular diet, Australian food labelling, ultra-processed food risks, gut health, micronutrients, practical meal prep for families. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
-  {key:'politics',label:'Political Watch',icon:'🏛️',pill:'pill-politics',prompt:'Generate 4 current Australian political news items. Cover Senate crossbench activity, One Nation positions, cost of living legislation, immigration policy, free speech issues, government spending. Factual and neutral. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'aviation',label:'Aviation',icon:'✈️',pill:'pill-aviation',prompt:'Generate 4 current Australian aviation news stories. Cover CASA regulatory updates, airline industry, Embraer E-jet operations, aircraft safety, new routes, ATC. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
+  {key:'jobs',label:'Pilot Jobs',icon:'👨‍✈️',pill:'pill-jobs',prompt:'Generate 4 current aviation job market news for Australia. Cover jet captain/FO vacancies, flight instructor roles, type rating instructor, chief pilot/fleet manager positions, airline cadet programs. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
+  {key:'finance',label:'Finance & Tax',icon:'💰',pill:'pill-finance',prompt:'Generate 4 current Australian finance and tax news for high-income professionals in QLD. Cover ATO updates, EOFY strategies, CGT, negative gearing, tax offsets, deductions. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
+  {key:'property',label:'SEQ Property',icon:'🏠',pill:'pill-property',prompt:'Generate 4 current South East Queensland property news covering Brisbane, Gold Coast, Sunshine Coast, Moreton Bay. Include prices, rental yields, 2032 Olympics impact, QLD grants. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
+  {key:'smsf',label:'SMSF',icon:'🏦',pill:'pill-smsf',prompt:'Generate 4 current Australian SMSF news. Cover ATO compliance, contribution caps, property in SMSF, pension phase, SMSF investment strategies. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
+  {key:'smallbiz',label:'Small Business',icon:'🛠️',pill:'pill-smallbiz',prompt:'Generate 4 current Australian small business news. Cover government incentives, instant asset write-off, QLD grants, digital transformation support, IR law changes. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
+  {key:'homeschool',label:'Home School',icon:'📚',pill:'pill-homeschool',prompt:'Generate 4 current home schooling news for Australian families. Cover QLD registration, curriculum resources, online learning, legal frameworks, university pathways, Charlotte Mason education. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
+  {key:'nutrition',label:'Food & Nutrition',icon:'🥗',pill:'pill-nutrition',prompt:'Generate 4 current food and nutrition science news. Cover intermittent fasting research, protein and longevity, gut health, Australian food labelling, ultra-processed food risks, meal prep for families. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
+  {key:'politics',label:'Political Watch',icon:'🏛️',pill:'pill-politics',prompt:'Generate 4 current Australian political news. Cover Senate crossbench, One Nation positions, cost of living legislation, immigration policy, free speech issues. Factual, neutral. Return JSON array of 4: {title, desc (2 sentences), source, time}. JSON only.'},
 ];
 
 async function fetchCategoryNews(cat){
@@ -384,7 +383,7 @@ function renderNews(items){
       </div>`).join('');
     html+='</div>';
   }
-  if(!html)html=`<div class="error-msg"><strong>No stories loaded</strong>Check that your ANTHROPIC_API_KEY is set in Netlify environment variables.</div>`;
+  if(!html)html=`<div style="color:var(--c-muted);padding:3rem;text-align:center">No stories loaded yet — try refreshing.</div>`;
   document.getElementById('news-content').innerHTML=html;
 }
 
@@ -395,9 +394,14 @@ async function refreshAll(){
   btn.classList.remove('spinning');btn.disabled=false;
 }
 
-loadAllNews();
-loadCommodities();
-loadPoliticians();
+// ── INIT ──
+function startApp(){
+  document.getElementById('loading-state').style.display='block';
+  loadAllNews();
+  loadCommodities();
+  loadPoliticians();
+}
+startApp();
 </script>
 </body>
 </html>
