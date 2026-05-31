@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cTech News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-bg: #030805;
+  --c-surface: #080f0a;
+  --c-surface2: #0d1a10;
+  --c-border: rgba(0,255,80,0.08);
+  --c-border2: rgba(0,255,80,0.18);
+  --c-green: #00ff50;
+  --c-green2: #00cc40;
+  --c-blue: #00aaff;
+  --c-gold: #f5c842;
+  --c-red: #ff4444;
+  --c-text: #d4f0dc;
+  --c-muted: #4a7a56;
+  --c-dim: #1e3a24;
+  --font-brand: 'Orbitron', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--c-bg);color:var(--c-text);min-height:100vh;font-size:14px;line-height:1.6;background-image:radial-gradient(ellipse 60% 40% at 20% 0%,rgba(0,255,80,0.04) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 80% 100%,rgba(0,170,255,0.04) 0%,transparent 60%)}
+
+.site-header{position:sticky;top:0;z-index:100;background:rgba(3,8,5,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--c-border2);padding:0 20px;display:flex;align-items:center;gap:16px;height:60px;box-shadow:0 1px 30px rgba(0,255,80,0.06)}
+.logo-wrap{flex-shrink:0;display:flex;align-items:center}
+.logo-svg{height:42px;width:auto}
+
+.ticker-wrap{flex:1;overflow:hidden;mask-image:linear-gradient(to right,transparent,black 6%,black 94%,transparent)}
+.ticker{display:flex;gap:28px;animation:ticker-scroll 50s linear infinite;white-space:nowrap;font-family:var(--font-mono);font-size:11px}
+.ticker:hover{animation-play-state:paused}
+.tick-item{display:flex;align-items:center;gap:5px}
+.tick-sym{color:var(--c-muted);font-weight:500}
+.tick-price{color:var(--c-text);font-weight:500}
+.tick-up{color:var(--c-green)}
+.tick-dn{color:var(--c-red)}
+@keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.header-time{font-family:var(--font-mono);font-size:10px;color:var(--c-muted);white-space:nowrap}
+.refresh-btn{background:transparent;border:1px solid var(--c-border2);color:var(--c-muted);padding:6px 14px;border-radius:6px;font-family:var(--font-body);font-size:12px;cursor:pointer;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.refresh-btn:hover{border-color:var(--c-green);color:var(--c-green);box-shadow:0 0 12px rgba(0,255,80,0.2)}
+.refresh-btn.spinning svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.nav-bar{background:var(--c-surface);border-bottom:1px solid var(--c-border);padding:0 20px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.nav-bar::-webkit-scrollbar{display:none}
+.nav-tab{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--c-muted);font-family:var(--font-body);font-size:12px;font-weight:500;padding:13px 14px 11px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.nav-tab:hover{color:var(--c-text)}
+.nav-tab.active{color:var(--c-green);border-bottom-color:var(--c-green);text-shadow:0 0 10px rgba(0,255,80,0.5)}
+
+.main-wrap{display:flex;min-height:calc(100vh - 104px)}
+.sidebar{width:290px;min-width:290px;border-right:1px solid var(--c-border);padding:18px;display:flex;flex-direction:column;gap:20px}
+.content-area{flex:1;padding:20px 22px;min-width:0}
+
+.panel-title{font-family:var(--font-brand);font-size:10px;letter-spacing:2px;color:var(--c-green);margin-bottom:10px;display:flex;align-items:center;gap:8px;text-shadow:0 0 12px rgba(0,255,80,0.6)}
+.panel-title .dot{width:5px;height:5px;border-radius:50%;background:var(--c-green);box-shadow:0 0 8px var(--c-green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
+
+.commodity-grid{display:flex;flex-direction:column;gap:6px}
+.commodity-row{background:var(--c-surface2);border:1px solid var(--c-border);border-radius:7px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;transition:border-color 0.2s}
+.commodity-row:hover{border-color:var(--c-border2)}
+.comm-name{font-size:11px;color:var(--c-muted)}
+.comm-price{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--c-green);text-shadow:0 0 8px rgba(0,255,80,0.3)}
+.comm-price.silver{color:#9ecfb0;text-shadow:none}
+.comm-price.oil{color:#fb923c;text-shadow:none}
+.comm-price.copper{color:#cd9b6a;text-shadow:none}
+.comm-price.aud{color:var(--c-blue);text-shadow:0 0 8px rgba(0,170,255,0.3)}
+.comm-price.btc{color:#f7931a;text-shadow:none}
+.comm-chg{font-family:var(--font-mono);font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500}
+.comm-chg.up{background:rgba(0,255,80,0.12);color:var(--c-green)}
+.comm-chg.dn{background:rgba(255,68,68,0.12);color:var(--c-red)}
+
+.housing-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.h-stat{background:var(--c-surface2);border:1px solid var(--c-border);border-radius:7px;padding:8px 10px}
+.h-stat-label{font-size:9px;color:var(--c-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.8px}
+.h-stat-val{font-family:var(--font-mono);font-size:15px;font-weight:500;color:var(--c-text);margin-top:2px}
+.h-stat-chg{font-size:10px}
+
+.pol-list{display:flex;flex-direction:column;gap:7px}
+.pol-card{background:var(--c-surface2);border:1px solid var(--c-border);border-radius:7px;padding:10px 12px;transition:border-color 0.2s}
+.pol-card:hover{border-color:var(--c-border2)}
+.pol-name{font-size:12px;font-weight:600;color:var(--c-text)}
+.pol-role{font-size:10px;color:var(--c-muted);margin-bottom:5px}
+.pol-latest{font-size:11px;color:var(--c-text);line-height:1.5}
+.pol-loading{font-size:11px;color:var(--c-muted);font-style:italic}
+
+.section-head{font-family:var(--font-brand);font-size:13px;letter-spacing:2px;color:var(--c-green);margin-bottom:14px;display:flex;align-items:center;gap:10px;text-shadow:0 0 16px rgba(0,255,80,0.5)}
+.section-head .badge{font-family:var(--font-body);font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;background:rgba(0,255,80,0.1);color:var(--c-green);border:1px solid var(--c-border2);letter-spacing:1px;animation:pulse-badge 3s infinite}
+@keyframes pulse-badge{0%,100%{box-shadow:0 0 6px rgba(0,255,80,0.2)}50%{box-shadow:0 0 14px rgba(0,255,80,0.5)}}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;margin-bottom:32px}
+.news-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:9px;padding:14px;display:flex;flex-direction:column;gap:7px;transition:border-color 0.2s,box-shadow 0.2s}
+.news-card:hover{border-color:var(--c-border2);box-shadow:0 0 20px rgba(0,255,80,0.06)}
+.card-top{display:flex;align-items:center;justify-content:space-between}
+.cat-pill{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:0.8px;text-transform:uppercase}
+.pill-aviation{background:rgba(0,170,255,0.12);color:#00aaff;border:1px solid rgba(0,170,255,0.2)}
+.pill-finance{background:rgba(245,200,66,0.12);color:var(--c-gold);border:1px solid rgba(245,200,66,0.2)}
+.pill-property{background:rgba(168,85,247,0.12);color:#c084fc;border:1px solid rgba(168,85,247,0.2)}
+.pill-smsf{background:rgba(0,255,80,0.10);color:var(--c-green);border:1px solid var(--c-border2)}
+.pill-smallbiz{background:rgba(251,146,60,0.12);color:#fb923c;border:1px solid rgba(251,146,60,0.2)}
+.pill-homeschool{background:rgba(244,114,182,0.12);color:#f472b6;border:1px solid rgba(244,114,182,0.2)}
+.pill-nutrition{background:rgba(74,222,128,0.12);color:#4ade80;border:1px solid rgba(74,222,128,0.2)}
+.pill-jobs{background:rgba(99,102,241,0.12);color:#818cf8;border:1px solid rgba(99,102,241,0.2)}
+.pill-politics{background:rgba(255,68,68,0.10);color:#ff8080;border:1px solid rgba(255,68,68,0.2)}
+.card-time{font-family:var(--font-mono);font-size:10px;color:var(--c-muted)}
+.card-title{font-size:13px;font-weight:600;color:var(--c-text);line-height:1.45}
+.card-desc{font-size:11px;color:var(--c-muted);line-height:1.6}
+.card-source{font-size:10px;color:var(--c-dim);border-top:1px solid var(--c-border);padding-top:7px;margin-top:2px}
+
+.error-msg{background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:8px;padding:16px;color:#ff8080;font-size:13px;margin-bottom:24px}
+.error-msg strong{display:block;margin-bottom:4px;font-size:14px}
+
+.skel-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:9px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.skeleton{background:linear-gradient(90deg,var(--c-surface2) 25%,var(--c-dim) 50%,var(--c-surface2) 75%);background-size:200% 100%;animation:shimmer 1.8s infinite;border-radius:4px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.footer{text-align:center;padding:18px;font-size:11px;color:var(--c-muted);border-top:1px solid var(--c-border)}
+.footer .brand{font-family:var(--font-brand);font-size:12px;color:var(--c-green);letter-spacing:2px;text-shadow:0 0 10px rgba(0,255,80,0.5)}
+
+@media(max-width:768px){.sidebar{display:none}.cards-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-wrap">
+    <svg class="logo-svg" viewBox="0 0 220 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="gg" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="gb" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0066cc"/><stop offset="60%" stop-color="#00aaff"/><stop offset="100%" stop-color="#00ff50"/></linearGradient>
+        <linearGradient id="tg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#44ff88"/><stop offset="100%" stop-color="#00aa30"/></linearGradient>
+      </defs>
+      <ellipse cx="105" cy="30" rx="80" ry="22" stroke="url(#ag)" stroke-width="1.8" fill="none" filter="url(#gb)" opacity="0.7"/>
+      <g filter="url(#gg)" transform="translate(162,10) rotate(-30)">
+        <path d="M0,8 L22,0 L20,4 L28,4 L18,8 L28,12 L20,12 L22,16 Z" fill="none" stroke="#00ff50" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M14,8 L0,12 L4,8 L0,4 Z" fill="none" stroke="#00ff50" stroke-width="1.2"/>
+      </g>
+      <path d="M148,12 L154,9 L152,14" fill="none" stroke="#00ff50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#gg)"/>
+      <text x="10" y="42" font-family="Orbitron,sans-serif" font-size="28" font-weight="900" fill="url(#tg)" filter="url(#gg)" opacity="0.9">c</text>
+      <text x="14" y="50" font-family="DM Sans,sans-serif" font-size="7" font-weight="400" fill="#00aa30" opacity="0.65">orr</text>
+      <text x="36" y="42" font-family="Orbitron,sans-serif" font-size="26" font-weight="900" fill="url(#tg)" filter="url(#gg)">Tech</text>
+      <path d="M10,47 Q80,56 155,44" stroke="url(#ag)" stroke-width="1.5" fill="none" opacity="0.6" filter="url(#gb)"/>
+    </svg>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker" id="ticker">
+      <span class="tick-item"><span class="tick-sym">XAU/USD</span><span class="tick-price" id="t-gold">—</span><span id="t-gold-c" class="tick-up">—</span></span>
+      <span class="tick-item"><span class="tick-sym">XAG/USD</span><span class="tick-price" id="t-silver">—</span><span id="t-silver-c">—</span></span>
+      <span class="tick-item"><span class="tick-sym">AUD/USD</span><span class="tick-price" id="t-aud">—</span><span id="t-aud-c">—</span></span>
+      <span class="tick-item"><span class="tick-sym">WTI Oil</span><span class="tick-price" id="t-oil">—</span><span id="t-oil-c">—</span></span>
+      <span class="tick-item"><span class="tick-sym">Bitcoin</span><span class="tick-price" id="t-btc">—</span><span id="t-btc-c">—</span></span>
+      <span class="tick-item"><span class="tick-sym">ASX 200</span><span class="tick-price" id="t-asx">—</span><span id="t-asx-c">—</span></span>
+      <span class="tick-item"><span class="tick-sym">Copper</span><span class="tick-price" id="t-cop">—</span><span id="t-cop-c">—</span></span>
+      <span class="tick-item"><span class="tick-sym">XAU/USD</span><span class="tick-price">—</span><span class="tick-up">—</span></span>
+      <span class="tick-item"><span class="tick-sym">XAG/USD</span><span class="tick-price">—</span><span>—</span></span>
+      <span class="tick-item"><span class="tick-sym">AUD/USD</span><span class="tick-price">—</span><span>—</span></span>
+      <span class="tick-item"><span class="tick-sym">WTI Oil</span><span class="tick-price">—</span><span>—</span></span>
+      <span class="tick-item"><span class="tick-sym">Bitcoin</span><span class="tick-price">—</span><span>—</span></span>
+      <span class="tick-item"><span class="tick-sym">ASX 200</span><span class="tick-price">—</span><span>—</span></span>
+      <span class="tick-item"><span class="tick-sym">Copper</span><span class="tick-price">—</span><span>—</span></span>
+    </div>
+  </div>
+
+  <div class="header-time" id="clock"></div>
+  <button class="refresh-btn" id="refresh-btn" onclick="refreshAll()">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+    Refresh
+  </button>
+</header>
+
+<nav class="nav-bar">
+  <button class="nav-tab active" onclick="showSection('all',this)">📰 All News</button>
+  <button class="nav-tab" onclick="showSection('aviation',this)">✈️ Aviation</button>
+  <button class="nav-tab" onclick="showSection('finance',this)">💰 Finance & Tax</button>
+  <button class="nav-tab" onclick="showSection('property',this)">🏠 SEQ Property</button>
+  <button class="nav-tab" onclick="showSection('smsf',this)">🏦 SMSF</button>
+  <button class="nav-tab" onclick="showSection('smallbiz',this)">🛠️ Small Business</button>
+  <button class="nav-tab" onclick="showSection('homeschool',this)">📚 Home School</button>
+  <button class="nav-tab" onclick="showSection('nutrition',this)">🥗 Food & Nutrition</button>
+  <button class="nav-tab" onclick="showSection('jobs',this)">👨‍✈️ Pilot Jobs</button>
+  <button class="nav-tab" onclick="showSection('politics',this)">🏛️ Political Watch</button>
+</nav>
+
+<div class="main-wrap">
+  <aside class="sidebar">
+    <div>
+      <div class="panel-title"><div class="dot"></div> LIVE MARKETS</div>
+      <div class="commodity-grid">
+        <div class="commodity-row"><div><div class="comm-name">Gold (oz)</div><div class="comm-price" id="s-gold">—</div></div><div class="comm-chg" id="s-gold-c">—</div></div>
+        <div class="commodity-row"><div><div class="comm-name">Silver (oz)</div><div class="comm-price silver" id="s-silver">—</div></div><div class="comm-chg" id="s-silver-c">—</div></div>
+        <div class="commodity-row"><div><div class="comm-name">WTI Crude (bbl)</div><div class="comm-price oil" id="s-oil">—</div></div><div class="comm-chg" id="s-oil-c">—</div></div>
+        <div class="commodity-row"><div><div class="comm-name">Copper (lb)</div><div class="comm-price copper" id="s-copper">—</div></div><div class="comm-chg" id="s-copper-c">—</div></div>
+        <div class="commodity-row"><div><div class="comm-name">AUD/USD</div><div class="comm-price aud" id="s-aud">—</div></div><div class="comm-chg" id="s-aud-c">—</div></div>
+        <div class="commodity-row"><div><div class="comm-name">Bitcoin</div><div class="comm-price btc" id="s-btc">—</div></div><div class="comm-chg" id="s-btc-c">—</div></div>
+        <div class="commodity-row"><div><div class="comm-name">ASX 200</div><div class="comm-price aud" id="s-asx">—</div></div><div class="comm-chg" id="s-asx-c">—</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="panel-title"><div class="dot" style="background:#c084fc;box-shadow:0 0 8px #c084fc"></div> SEQ HOUSING</div>
+      <div class="housing-stats">
+        <div class="h-stat"><div class="h-stat-label">Brisbane</div><div class="h-stat-val">$920k</div><div class="h-stat-chg tick-up">▲ 8.2% YoY</div></div>
+        <div class="h-stat"><div class="h-stat-label">Gold Coast</div><div class="h-stat-val">$1.08m</div><div class="h-stat-chg tick-up">▲ 11.4% YoY</div></div>
+        <div class="h-stat"><div class="h-stat-label">Sunshine Coast</div><div class="h-stat-val">$1.02m</div><div class="h-stat-chg tick-up">▲ 9.6% YoY</div></div>
+        <div class="h-stat"><div class="h-stat-label">Rental Yield</div><div class="h-stat-val">4.1%</div><div class="h-stat-chg" style="color:var(--c-muted)">Gross avg</div></div>
+      </div>
+      <div style="font-size:10px;color:var(--c-muted);text-align:right">CoreLogic estimate</div>
+    </div>
+    <div>
+      <div class="panel-title"><div class="dot" style="background:#ff8080;box-shadow:0 0 8px #ff4444"></div> POLITICAL WATCH</div>
+      <div class="pol-list" id="pol-list">
+        <div class="pol-card"><div class="pol-name">Pauline Hanson</div><div class="pol-role">One Nation — QLD Senator</div><div class="pol-latest pol-loading">Fetching latest…</div></div>
+        <div class="pol-card"><div class="pol-name">Alex Antic</div><div class="pol-role">Liberal — SA Senator</div><div class="pol-latest pol-loading">Fetching latest…</div></div>
+        <div class="pol-card"><div class="pol-name">Malcolm Roberts</div><div class="pol-role">One Nation — QLD Senator</div><div class="pol-latest pol-loading">Fetching latest…</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content-area">
+    <div id="loading-state">
+      <div class="section-head">ALL NEWS <span class="badge">LIVE</span></div>
+      <div class="cards-grid">
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:50%"></div><div class="skeleton" style="height:15px;width:90%"></div><div class="skeleton" style="height:11px;width:75%"></div><div class="skeleton" style="height:11px;width:60%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:45%"></div><div class="skeleton" style="height:15px;width:85%"></div><div class="skeleton" style="height:11px;width:80%"></div><div class="skeleton" style="height:11px;width:55%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:55%"></div><div class="skeleton" style="height:15px;width:92%"></div><div class="skeleton" style="height:11px;width:70%"></div><div class="skeleton" style="height:11px;width:65%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:40%"></div><div class="skeleton" style="height:15px;width:88%"></div><div class="skeleton" style="height:11px;width:78%"></div><div class="skeleton" style="height:11px;width:58%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:52%"></div><div class="skeleton" style="height:15px;width:82%"></div><div class="skeleton" style="height:11px;width:74%"></div><div class="skeleton" style="height:11px;width:62%"></div></div>
+        <div class="skel-card"><div class="skeleton" style="height:10px;width:48%"></div><div class="skeleton" style="height:15px;width:87%"></div><div class="skeleton" style="height:11px;width:72%"></div><div class="skeleton" style="height:11px;width:68%"></div></div>
+      </div>
+    </div>
+    <div id="news-content" style="display:none"></div>
+  </main>
+</div>
+
+<footer class="footer">
+  <span class="brand">cTech</span> &nbsp;·&nbsp; Corr Family News Hub &nbsp;·&nbsp; Brisbane, QLD &nbsp;·&nbsp; Last updated: <span id="last-updated">—</span>
+</footer>
+
+<script>
+// ── CLOCK ──
+function updateClock(){document.getElementById('clock').textContent=new Date().toLocaleString('en-AU',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Australia/Brisbane'})+' AEST'}
+updateClock();setInterval(updateClock,30000);
+
+// ── SECTION NAV ──
+let currentSection='all';
+function showSection(name,btn){
+  currentSection=name;
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  if(window._newsData)renderNews(window._newsData);
+}
+
+// ── SECURE API CALL via Netlify Function ──
+async function callAI(prompt){
+  const r=await fetch('/.netlify/functions/news',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages:[{role:'user',content:prompt}]})
+  });
+  if(!r.ok)throw new Error(`Function error: ${r.status}`);
+  return r.json();
+}
+
+// ── COMMODITIES via Yahoo Finance ──
+const COMMODITIES=[
+  {sym:'XAUUSD=X',sIds:['s-gold'],tIds:['t-gold'],cIds:['s-gold-c','t-gold-c'],fmt:v=>'$'+v.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2})},
+  {sym:'XAGUSD=X',sIds:['s-silver'],tIds:['t-silver'],cIds:['s-silver-c','t-silver-c'],fmt:v=>'$'+v.toFixed(2)},
+  {sym:'CL=F',sIds:['s-oil'],tIds:['t-oil'],cIds:['s-oil-c','t-oil-c'],fmt:v=>'$'+v.toFixed(2)},
+  {sym:'HG=F',sIds:['s-copper'],tIds:['t-cop'],cIds:['s-copper-c','t-cop-c'],fmt:v=>'$'+v.toFixed(3)},
+  {sym:'AUDUSD=X',sIds:['s-aud'],tIds:['t-aud'],cIds:['s-aud-c','t-aud-c'],fmt:v=>v.toFixed(4)},
+  {sym:'BTC-USD',sIds:['s-btc'],tIds:['t-btc'],cIds:['s-btc-c','t-btc-c'],fmt:v=>'$'+Math.round(v).toLocaleString()},
+  {sym:'^AXJO',sIds:['s-asx'],tIds:['t-asx'],cIds:['s-asx-c','t-asx-c'],fmt:v=>v.toLocaleString('en-AU',{minimumFractionDigits:1,maximumFractionDigits:1})},
+];
+async function loadCommodities(){
+  for(const c of COMMODITIES){
+    try{
+      const r=await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(c.sym)}?interval=1d&range=2d`);
+      const d=await r.json();
+      const meta=d.chart.result[0].meta;
+      const price=meta.regularMarketPrice;
+      const prev=meta.previousClose||meta.chartPreviousClose;
+      const pct=prev?((price-prev)/prev*100):0;
+      const up=pct>=0;
+      const pctStr=(up?'▲':'▼')+Math.abs(pct).toFixed(2)+'%';
+      const priceStr=c.fmt(price);
+      [...c.sIds,...c.tIds].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=priceStr;});
+      c.cIds.forEach(id=>{
+        const el=document.getElementById(id);if(!el)return;
+        el.textContent=pctStr;
+        if(el.classList.contains('comm-chg')){el.className='comm-chg '+(up?'up':'dn');}
+        else{el.className=up?'tick-up':'tick-dn';}
+      });
+    }catch(e){}
+    await new Promise(r=>setTimeout(r,130));
+  }
+}
+
+// ── POLITICIANS ──
+const POLS=[
+  {name:'Pauline Hanson',role:'One Nation — QLD Senator',q:'What has Pauline Hanson said or done recently in Australian politics? Give her most recent statement, vote, or media appearance in 2-3 sentences. Factual and neutral.'},
+  {name:'Alex Antic',role:'Liberal — SA Senator',q:'What has Alex Antic said or done recently in Australian politics? Give his most recent statement, vote, or media appearance in 2-3 sentences. Factual and neutral.'},
+  {name:'Malcolm Roberts',role:'One Nation — QLD Senator',q:'What has Malcolm Roberts said or done recently in Australian politics? Give his most recent statement, vote, or media appearance in 2-3 sentences. Factual and neutral.'},
+];
+async function loadPoliticians(){
+  const list=document.getElementById('pol-list');
+  list.innerHTML='';
+  for(const pol of POLS){
+    const card=document.createElement('div');
+    card.className='pol-card';
+    card.innerHTML=`<div class="pol-name">${pol.name}</div><div class="pol-role">${pol.role}</div><div class="pol-latest pol-loading">Fetching…</div>`;
+    list.appendChild(card);
+    try{
+      const data=await callAI(pol.q);
+      const text=data.content?.filter(b=>b.type==='text').map(b=>b.text).join(' ').trim()||'No recent activity found.';
+      card.querySelector('.pol-latest').textContent=text;
+      card.querySelector('.pol-latest').classList.remove('pol-loading');
+    }catch(e){
+      card.querySelector('.pol-latest').textContent='Could not load.';
+    }
+  }
+}
+
+// ── NEWS ──
+const CATEGORIES=[
+  {key:'aviation',label:'Aviation',icon:'✈️',pill:'pill-aviation',prompt:'Generate 4 current Australian aviation news stories. Cover: CASA regulatory updates, airline industry moves, Embraer E-jet operations in Australia, aircraft safety, new routes, ATC updates. Each story must be distinct. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'jobs',label:'Pilot Jobs',icon:'👨‍✈️',pill:'pill-jobs',prompt:'Generate 4 current aviation job market news items for Australia. Cover: jet captain/FO vacancies, flight instructor roles, type rating instructor positions, chief pilot or fleet manager roles, airline cadet programs, simulator instructor jobs. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'finance',label:'Finance & Tax',icon:'💰',pill:'pill-finance',prompt:'Generate 4 current Australian finance and tax news items for high-income professionals and small business owners in QLD. Cover: ATO updates, EOFY tax strategies, CGT, negative gearing, tax offsets, deductions, accountancy news. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'property',label:'SEQ Property',icon:'🏠',pill:'pill-property',prompt:'Generate 4 current South East Queensland property news items covering Brisbane, Gold Coast, Sunshine Coast, Moreton Bay, Logan, Ipswich. Include price movements, rental yields, 2032 Olympics impact, developer news, QLD grants. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'smsf',label:'SMSF',icon:'🏦',pill:'pill-smsf',prompt:'Generate 4 current Australian SMSF news items. Cover: ATO compliance, contribution caps, property in SMSF, pension phase, audit requirements, SMSF investment strategies for small business owners. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'smallbiz',label:'Small Business',icon:'🛠️',pill:'pill-smallbiz',prompt:'Generate 4 current Australian small business news items. Cover: government incentives, instant asset write-off, ATO payment plans, QLD state grants, digital transformation support, energy relief, IR/employment law changes. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'homeschool',label:'Home School',icon:'📚',pill:'pill-homeschool',prompt:'Generate 4 current home schooling news items for Australian families. Cover: QLD registration, curriculum resources, online learning, legal frameworks, university pathways, Charlotte Mason or classical education, homeschool community events. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'nutrition',label:'Food & Nutrition',icon:'🥗',pill:'pill-nutrition',prompt:'Generate 4 current food and nutrition science news items. Cover: intermittent fasting, protein and longevity, cardiovascular diet, Australian food labelling, ultra-processed food risks, gut health, micronutrients, practical meal prep for families. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+  {key:'politics',label:'Political Watch',icon:'🏛️',pill:'pill-politics',prompt:'Generate 4 current Australian political news items. Cover Senate crossbench activity, One Nation positions, cost of living legislation, immigration policy, free speech issues, government spending. Factual and neutral. Return JSON array of 4 objects: {title, desc (2 sentences), source, time}. JSON only, no markdown.'},
+];
+
+async function fetchCategoryNews(cat){
+  try{
+    const data=await callAI(cat.prompt);
+    const raw=data.content?.filter(b=>b.type==='text').map(b=>b.text).join(' ')||'[]';
+    const match=raw.match(/\[[\s\S]*\]/);
+    if(!match)return[];
+    return JSON.parse(match[0]).map(item=>({...item,category:cat.key,pill:cat.pill}));
+  }catch(e){return[];}
+}
+
+async function loadAllNews(){
+  document.getElementById('loading-state').style.display='block';
+  document.getElementById('news-content').style.display='none';
+  const results=await Promise.allSettled(CATEGORIES.map(cat=>fetchCategoryNews(cat)));
+  const allItems=results.flatMap(r=>r.status==='fulfilled'?r.value:[]);
+  window._newsData=allItems;
+  document.getElementById('loading-state').style.display='none';
+  document.getElementById('news-content').style.display='block';
+  document.getElementById('last-updated').textContent=new Date().toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit',timeZone:'Australia/Brisbane'});
+  renderNews(allItems);
+}
+
+function renderNews(items){
+  const grouped=currentSection==='all'
+    ?CATEGORIES.map(c=>({cat:c,items:items.filter(i=>i.category===c.key)})).filter(g=>g.items.length)
+    :[{cat:CATEGORIES.find(c=>c.key===currentSection),items:items.filter(i=>i.category===currentSection)}];
+  let html='';
+  for(const g of grouped){
+    if(!g.items.length)continue;
+    const label=g.cat?`${g.cat.icon} ${g.cat.label}`:'News';
+    html+=`<div class="section-head">${label} <span class="badge">LIVE</span></div><div class="cards-grid">`;
+    html+=g.items.map(item=>`
+      <div class="news-card">
+        <div class="card-top">
+          <span class="cat-pill ${item.pill}">${(CATEGORIES.find(c=>c.key===item.category)||{}).label||item.category}</span>
+          <span class="card-time">${item.time||''}</span>
+        </div>
+        <div class="card-title">${item.title}</div>
+        <div class="card-desc">${item.desc}</div>
+        <div class="card-source">📰 ${item.source||'News'}</div>
+      </div>`).join('');
+    html+='</div>';
+  }
+  if(!html)html=`<div class="error-msg"><strong>No stories loaded</strong>Check that your ANTHROPIC_API_KEY is set in Netlify environment variables.</div>`;
+  document.getElementById('news-content').innerHTML=html;
+}
+
+async function refreshAll(){
+  const btn=document.getElementById('refresh-btn');
+  btn.classList.add('spinning');btn.disabled=true;
+  await Promise.all([loadAllNews(),loadCommodities(),loadPoliticians()]);
+  btn.classList.remove('spinning');btn.disabled=false;
+}
+
+loadAllNews();
+loadCommodities();
+loadPoliticians();
+</script>
+</body>
+</html>
